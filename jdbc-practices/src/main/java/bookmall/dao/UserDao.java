@@ -25,7 +25,7 @@ public class UserDao {
 			
 			// 3. Statement 준비하기
 			String sql = "insert into users values(null, ?, ?, ?, ?)";
-			pstmt = conn.prepareStatement(sql);
+			pstmt = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
 			
 			// 4. Parameter binding
 			pstmt.setString(1, vo.getName());
@@ -36,6 +36,11 @@ public class UserDao {
 			// 5. SQL 실행
 			int count = pstmt.executeUpdate();
 			
+            ResultSet rs = pstmt.getGeneratedKeys();
+            if (rs.next()) {
+                vo.setNo(rs.getInt(1));
+            }
+            
 			result = count == 1;
 			
 		} catch (SQLException e) {
@@ -134,7 +139,6 @@ public class UserDao {
 			
 			// 5. SQL 실행
 			int count = pstmt.executeUpdate();
-			
 			result = count == 1;
 			
 		} catch (SQLException e) {

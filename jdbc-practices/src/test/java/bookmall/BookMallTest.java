@@ -85,7 +85,7 @@ public class BookMallTest {
 		
 		// 주문하기(1개)
 		mockOrderVo.setUserNo(mockUserVo01.getNo());
-		mockOrderVo.setNumber("20240520-000012");
+		mockOrderVo.setNo("20240520-000012");
 		mockOrderVo.setPayment(82400);
 		mockOrderVo.setShipping("서울시 은평구 진관3로 77 구파발 래미안 926-801");
 		mockOrderVo.setStatus("배송준비");	
@@ -110,10 +110,10 @@ public class BookMallTest {
 	public void testUser() {
 		assertEquals(2, userDao.findAll().size());
 	}
-//	@Test
-//	public void testCategory() {
-//		assertEquals(3, categoryDao.findAll().size());
-//	}
+	@Test
+	public void testCategory() {
+		assertEquals(3, categoryDao.findAll().size());
+	}
 	
 //	@Test
 //	public void testCart() {
@@ -159,30 +159,30 @@ public class BookMallTest {
 //		assertEquals(mockBookVo02.getTitle(), list.get(1).getBookTitle());		
 //	}
 //	
-	@AfterAll
-	public static void cleanUp() {
-		//주문책
-		orderDao.deleteBooksByNo(mockOrderVo.getNo());
-		
-		// 주문
-		orderDao.deleteByNo(mockOrderVo.getNo());
-		
-		// 카트
-		cartDao.deleteByUserNoAndBookNo(mockCartVo01.getUserNo(), mockBookVo01.getNo());
-		cartDao.deleteByUserNoAndBookNo(mockCartVo02.getUserNo(), mockBookVo02.getNo());
-		
-		// 서적
-		bookDao.deleteByNo(mockBookVo01.getNo());
-		bookDao.deleteByNo(mockBookVo02.getNo());
-		bookDao.deleteByNo(mockBookVo03.getNo());
-		
-		// 카테고리
-		categoryDao.deleteByNo(mockCategoryVo01.getNo());
-		categoryDao.deleteByNo(mockCategoryVo02.getNo());
-		categoryDao.deleteByNo(mockCategoryVo03.getNo());
-		
-		// 사용자
-		userDao.deleteByNo(mockUserVo01.getNo());
-		userDao.deleteByNo(mockUserVo02.getNo());
-	}
+//	@AfterAll
+//	public static void cleanUp() {
+//		//주문책
+//		orderDao.deleteBooksByNo(mockOrderVo.getNo());
+//		
+//		// 주문
+//		orderDao.deleteByNo(mockOrderVo.getNo());
+//		
+//		// 카트
+//		cartDao.deleteByUserNoAndBookNo(mockCartVo01.getUserNo(), mockBookVo01.getNo());
+//		cartDao.deleteByUserNoAndBookNo(mockCartVo02.getUserNo(), mockBookVo02.getNo());
+//		
+//		// 서적
+//		bookDao.deleteByNo(mockBookVo01.getNo());
+//		bookDao.deleteByNo(mockBookVo02.getNo());
+//		bookDao.deleteByNo(mockBookVo03.getNo());
+//		
+//		// 카테고리
+//		categoryDao.deleteByNo(mockCategoryVo01.getNo());
+//		categoryDao.deleteByNo(mockCategoryVo02.getNo());
+//		categoryDao.deleteByNo(mockCategoryVo03.getNo());
+//		
+//		// 사용자
+//		userDao.deleteByNo(mockUserVo01.getNo());
+//		userDao.deleteByNo(mockUserVo02.getNo());
+//	}
 }

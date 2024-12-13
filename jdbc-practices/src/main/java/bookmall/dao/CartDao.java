@@ -22,14 +22,13 @@ public class CartDao {
 			conn = getConnection();
 			
 			// 3. Statement 준비하기
-			String sql = "insert into cart values(null, ?, ?, ?, ?)";
+			String sql = "insert into cart values(?, ?, ?)";
 			pstmt = conn.prepareStatement(sql);
 			
 			// 4. Parameter binding
-			pstmt.setInt(2, vo.getQuantity());
-			pstmt.setInt(3, getBookPriceById(vo.getBookNo()));
-			pstmt.setInt(4, vo.getBookNo());
-			pstmt.setInt(5, vo.getUserNo());
+			pstmt.setInt(1, vo.getQuantity());
+			pstmt.setInt(2, vo.getBookNo());
+			pstmt.setInt(3, vo.getUserNo());
 			
 			// 5. SQL 실행
 			int count = pstmt.executeUpdate();
@@ -75,7 +74,7 @@ public class CartDao {
 			while(rs.next()) {
 				Integer id = rs.getInt(1);
 				Integer quantity = rs.getInt(2);
-				Integer price = getBookPriceById(rs.getInt(3));
+//				Integer price = getBookPriceById(rs.getInt(3));
 				Integer book_id = rs.getInt(4);
 				Integer users_id = rs.getInt(5);
 				
@@ -144,48 +143,6 @@ public class CartDao {
 		return result;
 	}
 	
-    // 도서 번호를 통해 도서의 가격을 가져오는 메서드
-    public Integer getBookPriceById(Integer bookId) {
-        Connection conn = null;
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
-        Integer price = null;
-
-        try {
-            conn = getConnection();
-
-            // 3. Statement 준비하기
-            String sql = "select price from book where id = ?";
-            pstmt = conn.prepareStatement(sql);
-
-            // 4. Parameter binding
-            pstmt.setInt(1, bookId);
-
-            // 5. SQL 실행 및 결과 처리
-            rs = pstmt.executeQuery();
-            if (rs.next()) {
-                price = rs.getInt(1); // 도서 가격 가져오기
-            }
-        } catch (SQLException e) {
-            System.out.println("error: " + e);
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (pstmt != null) {
-                    pstmt.close();
-                }
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-
-        return price;
-    }
 	
 	private Connection getConnection() throws SQLException {
 		Connection conn = null;

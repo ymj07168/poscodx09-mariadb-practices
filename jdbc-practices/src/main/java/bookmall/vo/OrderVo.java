@@ -1,32 +1,27 @@
 package bookmall.vo;
 
 public class OrderVo {
-	private Integer no;
+	private String no;
 	private Integer userNo;
-	private String number;
 	private Integer payment;
 	private String shipping;
 	private String status;
 	
 	
-	public Integer getNo() {
+	public String getNo() {
 		return no;
 	}
-	public void setNo(Integer no) {
+	public void setNo(String no) {
 		this.no = no;
 	}
-	public String getNumber() {
-		return number;
-	}
+
 	public Integer getUserNo() {
 		return userNo;
 	}
 	public void setUserNo(Integer userNo) {
 		this.userNo = userNo;
 	}
-	public void setNumber(String number) {
-		this.number = number;
-	}
+
 	public Integer getPayment() {
 		return payment;
 	}

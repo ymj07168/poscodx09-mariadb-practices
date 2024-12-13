@@ -4,15 +4,15 @@ public class CartVo {
 	private Integer userNo;
 	private Integer quantity;
 	private Integer bookNo;
-	private Integer price;
+//	private Integer price;
 
-	public Integer getPrice() {
-		return price;
-	}
-
-	public void setPrice(Integer price) {
-		this.price = price;
-	}
+//	public Integer getPrice() {
+//		return price;
+//	}
+//
+//	public void setPrice(Integer price) {
+//		this.price = price;
+//	}
 
 	public void setUserNo(int no) {
 		this.userNo = no;

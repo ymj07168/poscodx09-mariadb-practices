@@ -3,6 +3,7 @@ package bookmall.dao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import bookmall.vo.BookVo;
@@ -20,7 +21,7 @@ public class BookDao {
 			
 			// 3. Statement 준비하기
 			String sql = "insert into book values(null, ?, ?, ?);";
-			pstmt = conn.prepareStatement(sql);
+			pstmt = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
 			
 			// 4. Parameter binding
 			pstmt.setString(1, vo.getTitle());
@@ -29,7 +30,10 @@ public class BookDao {
 			
 			// 5. SQL 실행
 			int count = pstmt.executeUpdate();
-			
+            ResultSet rs = pstmt.getGeneratedKeys();
+            if (rs.next()) {
+                vo.setNo(rs.getInt(1));
+            }
 			result = count == 1;
 			
 		} catch (SQLException e) {

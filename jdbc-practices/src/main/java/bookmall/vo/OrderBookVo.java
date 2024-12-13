@@ -1,12 +1,12 @@
 package bookmall.vo;
 
 public class OrderBookVo {
-	private Integer orderNo;
+	private String orderNo;
 	private Integer bookNo;
 	private Integer quantity;
 	private Integer price;
 
-	public void setOrderNo(Integer no) {
+	public void setOrderNo(String no) {
 		this.orderNo = no;
 	}
 
@@ -22,7 +22,7 @@ public class OrderBookVo {
 		this.price = price;
 	}
 	
-	public Integer getOrderNo() {
+	public String getOrderNo() {
 		return orderNo;
 	}
 

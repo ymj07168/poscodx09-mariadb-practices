@@ -3,6 +3,7 @@ package bookmall.dao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -20,16 +21,116 @@ public class OrderDao {
 			conn = getConnection();
 			
 			// 3. Statement 준비하기
-			String sql = "insert into orders values(null, ?, ?, ?, ?, ?)";
+			String sql = "insert into orders values(?, ?, ?, ?, ?)";
+			pstmt = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+			
+			// 4. Parameter binding
+			pstmt.setString(1, vo.getNo());
+			pstmt.setString(2, vo.getStatus());
+			pstmt.setInt(3, vo.getPayment());
+			pstmt.setString(4, vo.getShipping());
+			pstmt.setInt(5, vo.getUserNo());
+			
+			
+			// 5. SQL 실행
+			int count = pstmt.executeUpdate();
+            ResultSet rs = pstmt.getGeneratedKeys();
+            if (rs.next()) {
+                vo.setNo(rs.getString(1));
+            }
+			result = count == 1;
+			
+		} catch (SQLException e) {
+			System.out.println("error: " + e);
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return result;
+		
+	}
+
+	public boolean insertBook(OrderBookVo vo) {
+		boolean result = false;
+		Connection conn = null;
+		PreparedStatement pstmt =  null;
+		
+		try {
+			conn = getConnection();
+			
+			// 3. Statement 준비하기
+			String sql = "insert into orders_book values(?, ?, ?, ?)";
+			pstmt = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+			
+			// 4. Parameter binding
+			pstmt.setInt(1, vo.getBookNo());
+			pstmt.setString(2, vo.getOrderNo());
+			pstmt.setInt(3, vo.getQuantity());
+			pstmt.setInt(4, vo.getPrice());
+			
+			
+			// 5. SQL 실행
+			int count = pstmt.executeUpdate();
+            ResultSet rs = pstmt.getGeneratedKeys();
+            if (rs.next()) {
+                vo.setBookNo(rs.getInt(1));
+                vo.setOrderNo(rs.getString(2));
+            }
+			result = count == 1;
+			
+		} catch (SQLException e) {
+			System.out.println("error: " + e);
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return result;
+		
+	}
+
+	public OrderVo findByNoAndUserNo(long l, Integer no) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public List<OrderBookVo> findBooksByNoAndUserNo(Integer no, Integer no2) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public boolean deleteBooksByNo(String no) {
+		boolean result = false;
+		Connection conn = null;
+		PreparedStatement pstmt =  null;
+		
+		try {
+			
+			conn = getConnection();
+			
+			// 3. Statement 준비하기
+			String sql = "delete from orders_book where orders_no = ?";
 			pstmt = conn.prepareStatement(sql);
 			
 			// 4. Parameter binding
-			pstmt.setInt(1, vo.getUserNo());
-			pstmt.setString(2, vo.getNumber());
-			pstmt.setInt(3, vo.getPayment());
-			pstmt.setString(4, vo.getShipping());
-			pstmt.setString(5, vo.getStatus());
-			
+			pstmt.setString(1, no);
 			
 			// 5. SQL 실행
 			int count = pstmt.executeUpdate();
@@ -37,7 +138,47 @@ public class OrderDao {
 			result = count == 1;
 			
 		} catch (SQLException e) {
-			System.out.println("error: " + e);
+			System.out.println("드라이버 로딩 실패: " + e);
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return result;
+		
+	}
+
+	public boolean deleteByNo(String no) {
+		boolean result = false;
+		Connection conn = null;
+		PreparedStatement pstmt =  null;
+		
+		try {
+			
+			conn = getConnection();
+			
+			// 3. Statement 준비하기
+			String sql = "delete from orders where orders_no = ?";
+			pstmt = conn.prepareStatement(sql);
+			
+			// 4. Parameter binding
+			pstmt.setString(1, no);
+			
+			// 5. SQL 실행
+			int count = pstmt.executeUpdate();
+			
+			result = count == 1;
+			
+		} catch (SQLException e) {
+			System.out.println("드라이버 로딩 실패: " + e);
 		} finally {
 			try {
 				if (pstmt != null) {
@@ -69,100 +210,5 @@ public class OrderDao {
 			System.out.println("드라이버 로딩 실패: " + e);
 		}
 		return conn;
-	}
-
-	public void insertBook(OrderBookVo mockOrderBookVo01) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public OrderVo findByNoAndUserNo(long l, Integer no) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public List<OrderBookVo> findBooksByNoAndUserNo(Integer no, Integer no2) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public boolean deleteBooksByNo(Integer no) {
-		boolean result = false;
-		Connection conn = null;
-		PreparedStatement pstmt =  null;
-		
-		try {
-			
-			conn = getConnection();
-			
-			// 3. Statement 준비하기
-			String sql = "delete from order_book where no = ?";
-			pstmt = conn.prepareStatement(sql);
-			
-			// 4. Parameter binding
-			pstmt.setInt(1, no);
-			
-			// 5. SQL 실행
-			int count = pstmt.executeUpdate();
-			
-			result = count == 1;
-			
-		} catch (SQLException e) {
-			System.out.println("드라이버 로딩 실패: " + e);
-		} finally {
-			try {
-				if (pstmt != null) {
-					pstmt.close();
-				}
-				if (conn != null) {
-					conn.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		return result;
-		
-	}
-
-	public boolean deleteByNo(Integer no) {
-		boolean result = false;
-		Connection conn = null;
-		PreparedStatement pstmt =  null;
-		
-		try {
-			
-			conn = getConnection();
-			
-			// 3. Statement 준비하기
-			String sql = "delete from orders where no = ?";
-			pstmt = conn.prepareStatement(sql);
-			
-			// 4. Parameter binding
-			pstmt.setInt(1, no);
-			
-			// 5. SQL 실행
-			int count = pstmt.executeUpdate();
-			
-			result = count == 1;
-			
-		} catch (SQLException e) {
-			System.out.println("드라이버 로딩 실패: " + e);
-		} finally {
-			try {
-				if (pstmt != null) {
-					pstmt.close();
-				}
-				if (conn != null) {
-					conn.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		return result;
-		
 	}
 }

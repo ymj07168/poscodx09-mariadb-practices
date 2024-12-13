@@ -1,5 +1,6 @@
 package emaillist;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class EmaillistApp {
@@ -28,7 +29,23 @@ public class EmaillistApp {
 	}
 
 	private static void doInsert() {
-		System.out.println("doInsert");
+		System.out.print("성:");
+		String firstName = scanner.nextLine();
+
+		System.out.print("이름:");
+		String lastName = scanner.nextLine();
+
+		System.out.print("이메일:");
+		String email = scanner.nextLine();
+		
+		EmaillistVo vo = new EmaillistVo();
+		vo.setFirstName(firstName);
+		vo.setLastName(lastName);
+		vo.setEmail(email);
+		
+		new EmaillistDao().insert(vo);
+		
+		doList();
 	}
 
 	private static void doDelete() {
@@ -41,7 +58,10 @@ public class EmaillistApp {
 	}
 
 	private static void doList() {
-		System.out.println("doList");
+		List<EmaillistVo> list = new EmaillistDao().findAll();
+		for(EmaillistVo vo : list) {
+			System.out.println(vo.getFirstName() + " " + vo.getLastName() + ":" + vo.getEmail());
+		}
 	}
 
 }

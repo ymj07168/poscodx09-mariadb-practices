@@ -18,15 +18,12 @@ public class EmaillistDaoTest {
 	
 	@BeforeAll
 	public static void setup() {
-		List<EmaillistVo> list = new EmaillistDao().findAll();
-
+		count = new EmaillistDao().count();
 	}
 	
 	@Test
 	@Order(1)
 	public void insertTest() {
-		
-		int n = 10;
 		EmaillistVo vo = new EmaillistVo();
 		vo.setFirstName("둘");
 		vo.setLastName("리");
@@ -51,7 +48,6 @@ public class EmaillistDaoTest {
 	
 	@AfterAll
 	public void cleanup() {
-		
 	}
 
 }

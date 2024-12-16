@@ -1,7 +1,7 @@
 package bookmall.vo;
 
 public class OrderBookVo {
-	private String orderNo;
+	private long orderNo;
 	private int bookNo;
 	private int quantity;
 	private int price;
@@ -15,7 +15,7 @@ public class OrderBookVo {
 		this.title = title;
 	}
 
-	public void setOrderNo(String no) {
+	public void setOrderNo(long no) {
 		this.orderNo = no;
 	}
 
@@ -31,7 +31,7 @@ public class OrderBookVo {
 		this.price = price;
 	}
 	
-	public String getOrderNo() {
+	public long getOrderNo() {
 		return orderNo;
 	}
 

@@ -1,24 +1,25 @@
 package bookmall.vo;
 
 public class OrderVo {
-	private String no;
+	private long no;
+	private String number;
 	private int userNo;
 	private int payment;
 	private String shipping;
 	private String status;
 	
 	
-	public String getNo() {
+	public long getNo() {
 		return no;
+	}
+	public void setNo(long no) {
+		this.no = no;
 	}
 	public String getNumber() {
-		return no;
+		return number;
 	}
-	public void setNo(String no) {
-		this.no = no;
-	}
-	public void setNumber(String no) {
-		this.no = no;
+	public void setNumber(String number) {
+		this.number = number;
 	}
 	public Integer getUserNo() {
 		return userNo;
@@ -44,7 +45,5 @@ public class OrderVo {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-
-
 
 }

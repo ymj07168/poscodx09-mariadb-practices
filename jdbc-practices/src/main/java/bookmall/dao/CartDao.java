@@ -144,7 +144,6 @@ public class CartDao {
 		return result;
 	}
 	
-	
 	private Connection getConnection() throws SQLException {
 		Connection conn = null;
 		try {

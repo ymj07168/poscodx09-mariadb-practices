@@ -1,9 +1,9 @@
 package bookmall.vo;
 
 public class CartVo {
-	private Integer userNo;
-	private Integer quantity;
-	private Integer bookNo;
+	private int userNo;
+	private int quantity;
+	private int bookNo;
 	private String title;
 //	private Integer price;
 
@@ -27,15 +27,15 @@ public class CartVo {
 		this.bookNo = no;
 	}
 
-	public Integer getQuantity() {
+	public int getQuantity() {
 		return quantity;
 	}
 
-	public Integer getUserNo() {
+	public int getUserNo() {
 		return userNo;
 	}
 
-	public Integer getBookNo() {
+	public int getBookNo() {
 		return bookNo;
 	}
 

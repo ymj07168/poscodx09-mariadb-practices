@@ -2,9 +2,9 @@ package bookmall.vo;
 
 public class OrderBookVo {
 	private String orderNo;
-	private Integer bookNo;
-	private Integer quantity;
-	private Integer price;
+	private int bookNo;
+	private int quantity;
+	private int price;
 	private String title;
 
 	public String getTitle() {
@@ -19,7 +19,7 @@ public class OrderBookVo {
 		this.orderNo = no;
 	}
 
-	public void setBookNo(Integer no) {
+	public void setBookNo(int no) {
 		this.bookNo = no;
 	}
 
@@ -39,11 +39,11 @@ public class OrderBookVo {
 		return bookNo;
 	}
 
-	public Integer getQuantity() {
+	public int getQuantity() {
 		return quantity;
 	}
 
-	public Integer getPrice() {
+	public int getPrice() {
 		return price;
 	}
 

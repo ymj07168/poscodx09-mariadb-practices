@@ -1,18 +1,18 @@
 package bookmall.vo;
 
 public class CategoryVo {
-	private Integer no;
+	private int no;
 	private String category;
 
 	public CategoryVo(String category) {
 		this.category = category;
 	}
 
-	public Integer getNo() {
+	public int getNo() {
 		return no;
 	}
 
-	public void setNo(Integer no) {
+	public void setNo(int no) {
 		this.no = no;
 	}
 

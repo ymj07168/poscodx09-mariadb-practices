@@ -1,7 +1,7 @@
 package bookmall.vo;
 
 public class UserVo {
-	private Integer no;
+	private int no;
 	private String name;
 	private String email;
 	private String password;
@@ -17,7 +17,7 @@ public class UserVo {
 	public UserVo() {
 	}
 
-	public Integer getNo() {
+	public int getNo() {
 		return no;
 	}
 

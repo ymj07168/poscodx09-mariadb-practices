@@ -2,8 +2,8 @@ package bookmall.vo;
 
 public class OrderVo {
 	private String no;
-	private Integer userNo;
-	private Integer payment;
+	private int userNo;
+	private int payment;
 	private String shipping;
 	private String status;
 	
@@ -20,13 +20,13 @@ public class OrderVo {
 	public Integer getUserNo() {
 		return userNo;
 	}
-	public void setUserNo(Integer userNo) {
+	public void setUserNo(int userNo) {
 		this.userNo = userNo;
 	}
-	public Integer getPayment() {
+	public int getPayment() {
 		return payment;
 	}
-	public void setPayment(Integer payment) {
+	public void setPayment(int payment) {
 		this.payment = payment;
 	}
 	public String getShipping() {

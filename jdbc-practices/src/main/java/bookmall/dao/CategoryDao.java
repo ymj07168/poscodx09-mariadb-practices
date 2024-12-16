@@ -94,10 +94,12 @@ public class CategoryDao {
 			
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
-				Long id = rs.getLong(1);
+				Integer id = rs.getInt(1);
 				String category = rs.getString(2);
 				
 				CategoryVo vo = new CategoryVo(category);
+				vo.setNo(id);
+				result.add(vo);
 			}
 			
 		} catch (SQLException e) {
@@ -128,7 +130,7 @@ public class CategoryDao {
 			conn = getConnection();
 			
 			// 3. Statement 준비하기
-			String sql = "delete from categories where no = ?";
+			String sql = "delete from categories where id = ?";
 			pstmt = conn.prepareStatement(sql);
 			
 			// 4. Parameter binding

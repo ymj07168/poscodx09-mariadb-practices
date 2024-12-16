@@ -5,6 +5,15 @@ public class OrderBookVo {
 	private Integer bookNo;
 	private Integer quantity;
 	private Integer price;
+	private String title;
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
 	public void setOrderNo(String no) {
 		this.orderNo = no;
@@ -39,7 +48,7 @@ public class OrderBookVo {
 	}
 
 	public Object getBookTitle() {
-		return null;
+		return this.title;
 	}
 
 }

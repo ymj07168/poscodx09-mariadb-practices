@@ -60,23 +60,6 @@ public class UserDao {
 		
 		return result;
 	}
-
-	private Connection getConnection() throws SQLException {
-		Connection conn = null;
-		try {
-			// 1. JDBC Driver 로딩
-			Class.forName("org.mariadb.jdbc.Driver");
-			
-			// 2. 연결하기
-			String url = "jdbc:mariadb://192.168.0.5:3306/bookmall";
-			conn = DriverManager.getConnection(url, "bookmall", "bookmall");
-		}
-		catch (ClassNotFoundException e) {
-			System.out.println("드라이버 로딩 실패: " + e);
-		}
-		return conn;
-	}
-
 	
 	public List<UserVo> findAll() {
 		
@@ -89,18 +72,20 @@ public class UserDao {
 			conn = getConnection();
 			
 			// 3. Statement 준비하기
-			String sql = "select id, name, phone, email, password from users order by id desc";
+			String sql = "select id, name, phone, email, password from users;";
 			pstmt = conn.prepareStatement(sql);
 			
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
-				Long id = rs.getLong(1);
+				Integer id = rs.getInt(1);
 				String name = rs.getString(2);
 				String phone = rs.getString(3);
 				String email = rs.getString(4);
 				String password = rs.getString(5);
 				
 				UserVo vo = new UserVo(name, email, password, phone);
+				vo.setNo(id);
+				result.add(vo);
 			}
 			
 		} catch (SQLException e) {
@@ -131,7 +116,7 @@ public class UserDao {
 			conn = getConnection();
 			
 			// 3. Statement 준비하기
-			String sql = "delete from users where no = ?";
+			String sql = "delete from users where id = ?";
 			pstmt = conn.prepareStatement(sql);
 			
 			// 4. Parameter binding
@@ -158,6 +143,22 @@ public class UserDao {
 		
 		return result;
 		
+	}
+	
+	private Connection getConnection() throws SQLException {
+		Connection conn = null;
+		try {
+			// 1. JDBC Driver 로딩
+			Class.forName("org.mariadb.jdbc.Driver");
+			
+			// 2. 연결하기
+			String url = "jdbc:mariadb://192.168.0.5:3306/bookmall";
+			conn = DriverManager.getConnection(url, "bookmall", "bookmall");
+		}
+		catch (ClassNotFoundException e) {
+			System.out.println("드라이버 로딩 실패: " + e);
+		}
+		return conn;
 	}
 
 }

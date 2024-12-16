@@ -11,17 +11,18 @@ public class OrderVo {
 	public String getNo() {
 		return no;
 	}
+	public String getNumber() {
+		return no;
+	}
 	public void setNo(String no) {
 		this.no = no;
 	}
-
 	public Integer getUserNo() {
 		return userNo;
 	}
 	public void setUserNo(Integer userNo) {
 		this.userNo = userNo;
 	}
-
 	public Integer getPayment() {
 		return payment;
 	}

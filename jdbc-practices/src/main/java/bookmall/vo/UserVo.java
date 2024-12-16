@@ -14,6 +14,9 @@ public class UserVo {
 		this.phone = phone;
 	}
 
+	public UserVo() {
+	}
+
 	public Integer getNo() {
 		return no;
 	}

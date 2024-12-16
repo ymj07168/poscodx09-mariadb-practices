@@ -5,8 +5,10 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
+import bookmall.vo.CartVo;
 import bookmall.vo.OrderBookVo;
 import bookmall.vo.OrderVo;
 
@@ -106,17 +108,167 @@ public class OrderDao {
 		
 	}
 
-	public OrderVo findByNoAndUserNo(long l, Integer no) {
-		// TODO Auto-generated method stub
+	public OrderVo findByNoAndUserNo(Long orderNo, Integer userNo) {
+		List<OrderVo> result = new ArrayList<>();
+		Connection conn = null;
+		PreparedStatement pstmt =  null;
+		ResultSet rs = null;
+		
+		try {
+			conn = getConnection();
+			
+			// 3. Statement 준비하기
+			String sql = "select * from orders where no = ? and users_id = ?;";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, orderNo.toString());
+			pstmt.setInt(2, userNo);
+			
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				String no = rs.getString(1);
+				String status = rs.getString(2);
+				Integer payment = rs.getInt(3);
+				String shipping = rs.getString(4);
+				Integer users_id = rs.getInt(5);
+				
+				OrderVo vo = new OrderVo();
+				
+				vo.setNo(no);
+				vo.setStatus(status);
+				vo.setPayment(payment);
+				vo.setShipping(shipping);
+				vo.setUserNo(users_id);
+				
+				result.add(vo);
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("error: " + e);
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		if (result.size() > 0) {
+			return result.get(0);
+		}
+		return null;
+	}
+	
+	public OrderVo findByNoAndUserNo(String orderNo, Integer userNo) {
+		List<OrderVo> result = new ArrayList<>();
+		Connection conn = null;
+		PreparedStatement pstmt =  null;
+		ResultSet rs = null;
+		
+		try {
+			conn = getConnection();
+			
+			// 3. Statement 준비하기
+			String sql = "select * from orders where no = ? and users_id = ?;";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, orderNo);
+			pstmt.setInt(2, userNo);
+			
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				String no = rs.getString(1);
+				String status = rs.getString(2);
+				Integer payment = rs.getInt(3);
+				String shipping = rs.getString(4);
+				Integer users_id = rs.getInt(5);
+				
+				OrderVo vo = new OrderVo();
+				
+				vo.setNo(no);
+				vo.setStatus(status);
+				vo.setPayment(payment);
+				vo.setShipping(shipping);
+				vo.setUserNo(users_id);
+				
+				result.add(vo);
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("error: " + e);
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		if (result.size() > 0) {
+			return result.get(0);
+		}
 		return null;
 	}
 
-	public List<OrderBookVo> findBooksByNoAndUserNo(Integer no, Integer no2) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<OrderBookVo> findBooksByNoAndUserNo(String orderNo, Integer userNo) {
+		List<OrderBookVo> result = new ArrayList<>();
+		Connection conn = null;
+		PreparedStatement pstmt =  null;
+		ResultSet rs = null;
+		
+		try {
+			conn = getConnection();
+			
+			// 3. Statement 준비하기
+			String sql = "select quantity, title, book_id, orders_no, ob.price from orders_book ob join book b on b.id = ob.book_id;";
+			pstmt = conn.prepareStatement(sql);
+			
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				Integer quantity = rs.getInt(1);
+				String title = rs.getString(2);
+				Integer book_id = rs.getInt(3);
+				String orders_no = rs.getString(4);
+				Integer price = rs.getInt(5);
+				
+				OrderBookVo vo = new OrderBookVo();
+				
+				vo.setBookNo(book_id);
+				vo.setTitle(title);
+				vo.setQuantity(quantity);
+				vo.setOrderNo(orders_no);
+				vo.setPrice(price);
+				
+				result.add(vo);
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("error: " + e);
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return result;
 	}
 
-	public boolean deleteBooksByNo(String no) {
+	public boolean deleteBooksByNo(String orderNo) {
 		boolean result = false;
 		Connection conn = null;
 		PreparedStatement pstmt =  null;
@@ -130,7 +282,7 @@ public class OrderDao {
 			pstmt = conn.prepareStatement(sql);
 			
 			// 4. Parameter binding
-			pstmt.setString(1, no);
+			pstmt.setString(1, orderNo);
 			
 			// 5. SQL 실행
 			int count = pstmt.executeUpdate();
@@ -156,7 +308,7 @@ public class OrderDao {
 		
 	}
 
-	public boolean deleteByNo(String no) {
+	public boolean deleteByNo(String orderNo) {
 		boolean result = false;
 		Connection conn = null;
 		PreparedStatement pstmt =  null;
@@ -166,11 +318,11 @@ public class OrderDao {
 			conn = getConnection();
 			
 			// 3. Statement 준비하기
-			String sql = "delete from orders where orders_no = ?";
+			String sql = "delete from orders where no = ?";
 			pstmt = conn.prepareStatement(sql);
 			
 			// 4. Parameter binding
-			pstmt.setString(1, no);
+			pstmt.setString(1, orderNo);
 			
 			// 5. SQL 실행
 			int count = pstmt.executeUpdate();

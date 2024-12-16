@@ -65,24 +65,25 @@ public class CartDao {
 			conn = getConnection();
 			
 			// 3. Statement 준비하기
-			String sql = "select id, quantity, price, book_id, users_id from cart where users_id = ?";
+			String sql = "select quantity, title, book_id, users_id from cart join book on book.id = cart.book_id where users_id = ?;";
 			pstmt = conn.prepareStatement(sql);
-			
 			pstmt.setInt(1, no);
 			
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
-				Integer id = rs.getInt(1);
-				Integer quantity = rs.getInt(2);
-//				Integer price = getBookPriceById(rs.getInt(3));
-				Integer book_id = rs.getInt(4);
-				Integer users_id = rs.getInt(5);
+				Integer quantity = rs.getInt(1);
+				String title = rs.getString(2);
+				Integer book_id = rs.getInt(3);
+				Integer users_id = rs.getInt(4);
 				
 				CartVo vo = new CartVo();
 				
 				vo.setUserNo(users_id);
 				vo.setBookNo(book_id);
+				vo.setTitle(title);
 				vo.setQuantity(quantity);
+				
+				result.add(vo);
 			}
 			
 		} catch (SQLException e) {

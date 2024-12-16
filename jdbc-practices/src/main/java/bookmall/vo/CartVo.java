@@ -4,6 +4,7 @@ public class CartVo {
 	private Integer userNo;
 	private Integer quantity;
 	private Integer bookNo;
+	private String title;
 //	private Integer price;
 
 //	public Integer getPrice() {
@@ -38,9 +39,16 @@ public class CartVo {
 		return bookNo;
 	}
 
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
 	public Object getBookTitle() {
-		// TODO Auto-generated method stub
-		return null;
+		return title;
 	}
 
 }

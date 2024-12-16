@@ -81,7 +81,7 @@ public class BookDao {
 			conn = getConnection();
 			
 			// 3. Statement 준비하기
-			String sql = "delete from book where no = ?";
+			String sql = "delete from book where id = ?";
 			pstmt = conn.prepareStatement(sql);
 			
 			// 4. Parameter binding

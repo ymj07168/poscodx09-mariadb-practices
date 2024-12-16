@@ -17,6 +17,9 @@ public class OrderVo {
 	public void setNo(String no) {
 		this.no = no;
 	}
+	public void setNumber(String no) {
+		this.no = no;
+	}
 	public Integer getUserNo() {
 		return userNo;
 	}

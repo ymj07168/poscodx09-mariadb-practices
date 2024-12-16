@@ -23,11 +23,9 @@ import bookmall.vo.OrderVo;
 import bookmall.vo.UserVo;
 
 /**
- *  [경고] 수정하면 빵(0)점!!!
+ * [경고] 수정하면 빵(0)점!!!
  */
-
 public class BookMallTest {
-	
 	private static UserVo mockUserVo01 = new UserVo("데스트유저01", "test01@test.com", "1234", "010-0000-0000");
 	private static UserVo mockUserVo02 = new UserVo("데스트유저02", "test02@test.com", "1234", "010-1111-1111");
 	
@@ -85,7 +83,7 @@ public class BookMallTest {
 		
 		// 주문하기(1개)
 		mockOrderVo.setUserNo(mockUserVo01.getNo());
-		mockOrderVo.setNo("20240520-000012");
+		mockOrderVo.setNumber("202401213-000012");
 		mockOrderVo.setPayment(82400);
 		mockOrderVo.setShipping("서울시 은평구 진관3로 77 구파발 래미안 926-801");
 		mockOrderVo.setStatus("배송준비");	
@@ -101,7 +99,7 @@ public class BookMallTest {
 		mockOrderBookVo02.setOrderNo(mockOrderVo.getNo());
 		mockOrderBookVo02.setBookNo(mockBookVo02.getNo());
 		mockOrderBookVo02.setQuantity(2);
-		mockOrderBookVo02.setPrice(64000);
+		mockOrderBookVo02.setPrice(64000);		
 		orderDao.insertBook(mockOrderBookVo02);
 	}
 	
@@ -119,7 +117,7 @@ public class BookMallTest {
 	public void testCart() {
 		List<CartVo> list = cartDao.findByUserNo(mockUserVo01.getNo());
 		
-		assertEquals(2, list.size());
+		assertEquals(2, list.size());		
 		assertEquals(mockBookVo01.getNo(), list.get(0).getBookNo());
 		assertEquals(mockBookVo01.getTitle(), list.get(0).getBookTitle());
 		assertEquals(mockCartVo01.getQuantity(), list.get(0).getQuantity());
@@ -127,7 +125,6 @@ public class BookMallTest {
 		assertEquals(mockBookVo02.getTitle(), list.get(1).getBookTitle());		
 		assertEquals(mockCartVo02.getQuantity(), list.get(1).getQuantity());
 	}
-	
 	@Test
 	public void testOrder() {
 		OrderVo vo = null;
@@ -135,13 +132,12 @@ public class BookMallTest {
 		vo = orderDao.findByNoAndUserNo(1234567L, mockUserVo01.getNo());
 		assertNull(vo);		
 		vo = orderDao.findByNoAndUserNo(mockOrderVo.getNo(), mockUserVo01.getNo());
-		assertNotNull(vo);
+		assertNotNull(vo);		
 		assertEquals(mockOrderVo.getNumber(), vo.getNumber());		
 		assertEquals(mockOrderVo.getPayment(), vo.getPayment());		
 		assertEquals(mockOrderVo.getStatus(), vo.getStatus());		
 		assertEquals(mockOrderVo.getShipping(), vo.getShipping());		
 	}
-	
 	@Test
 	public void testOrderBooks() {
 		List<OrderBookVo> list = orderDao.findBooksByNoAndUserNo(mockOrderVo.getNo(), mockUserVo01.getNo());
